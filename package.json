@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "telebot": "^1.4.1"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
