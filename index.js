@@ -17,7 +17,7 @@ const LESSONS = [
 function generate_lessons_list(){
   let result = ""
   for (const idx in LESSONS) {
-    result += `${idx + 1}. ${LESSONS[idx].title}` + "\n"
+    result += `${String(idx + 1)}. ${LESSONS[idx].title}` + "\n"
   }
   return result
 }
