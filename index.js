@@ -1,18 +1,20 @@
 console.log("HELLLLLO")
 require('dotenv')
 
-const TeleBot = require('telebot');
+// const TeleBot = require('telebot');
+const TeleBot = require('node-telegram-bot-api');
 const bot = new TeleBot(process.env.BOT_TOKEN);
 
-bot.on('/start', (msg) => msg.reply.text('Welcome!'));
-bot.on('text', (msg) => msg.reply.text("Hello, so you said " + msg.text));
+// bot.on('/start', (msg) => msg.reply.text('Welcome!'));
+// bot.on('text', (msg) => msg.reply.text("Hello, so you said " + msg.text));
+//
+// bot.on(/(show\s)?kitty*/, (msg) => {
+//   return msg.reply.photo('http://thecatapi.com/api/images/get');
+// });
 
-bot.on(/(show\s)?kitty*/, (msg) => {
-  return msg.reply.photo('http://thecatapi.com/api/images/get');
-});
-
-bot.on('/btn', (msg) => {
-  msg.reply.text('لطفا یک گزینه را انتخاب کنید:', {
+// Listen to /start command
+bot.onText(/\/btn/, (msg) => {
+  bot.sendMessage(msg.chat.id, 'لطفا یک گزینه را انتخاب کنید:', {
     reply_markup: {
       inline_keyboard: [
         [
@@ -22,6 +24,14 @@ bot.on('/btn', (msg) => {
       ]
     }
   });
+});
+
+// Handle button click
+bot.on('callback_query', (query) => {
+  const chatId = query.message.chat.id;
+  const data = query.data;
+
+  bot.sendMessage(chatId, `شما گزینه "${data}" را انتخاب کردید.`);
 });
 
 
