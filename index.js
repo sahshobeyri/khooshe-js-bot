@@ -8,10 +8,27 @@ const WELCOME_MSG = "به خوشه خوش آمدید. 🍇"
 const HELP_MSG = "برای یادگیری حبه به حبه، جای درستی رو انتخاب کردید."
 const SELECT_LESSON_MSG = "لطفا درس مورد نظرتون رو انتخاب کنید."
 
+const LESSONS = [
+  {title: "درس شماره 1"},
+  {title: "درس شماره 2"},
+  {title: "درس شماره 3"},
+];
+
+function generate_lessons_list(){
+  let result = ""
+  for (const l of LESSONS) {
+    result += l.title + "\n"
+  }
+  return result
+}
+
 const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
 bot.help((ctx) => ctx.reply(HELP_MSG))
-bot.command('select_lesson',(ctx) => ctx.reply(SELECT_LESSON_MSG))
+bot.command('select_lesson',(ctx) => {
+  ctx.reply(SELECT_LESSON_MSG)
+  ctx.reply(generate_lessons_list())
+})
 bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
   reply_markup: {
     inline_keyboard: [
