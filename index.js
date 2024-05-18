@@ -11,4 +11,18 @@ bot.on(/(show\s)?kitty*/, (msg) => {
   return msg.reply.photo('http://thecatapi.com/api/images/get');
 });
 
+bot.on('/btn', (msg) => {
+  msg.reply.text('لطفا یک گزینه را انتخاب کنید:', {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: 'گزینه 1', callback_data: 'option1' },
+          { text: 'گزینه 2', callback_data: 'option2' }
+        ]
+      ]
+    }
+  });
+});
+
+
 bot.start();
