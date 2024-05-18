@@ -6,6 +6,7 @@ const { message } = require('telegraf/filters')
 
 const WELCOME_MSG = "به خوشه خوش آمدید. 🍇"
 const HELP_MSG = "برای یادگیری حبه به حبه، جای درستی رو انتخاب کردید."
+const SELECT_LESSON_MSG = "لطفا درس مورد نظرتون رو انتخاب کنید."
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
