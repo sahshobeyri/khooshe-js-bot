@@ -10,14 +10,6 @@ const HELP_MSG = "برای یادگیری حبه به حبه، جای درستی
 const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
 bot.help((ctx) => ctx.reply(HELP_MSG))
-// bot.on(message('sticker'), (ctx) => ctx.reply('🖕🏻'))
-bot.on(message('text'),  (ctx) => {
-  if (ctx.message.text !== "start") {
-    ctx.reply('🤌🏻')
-  }
-});
-// bot.hears('hi', (ctx) => ctx.reply('Hey there'))
-// bot.launch().then()
 
 bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
   reply_markup: {
@@ -51,3 +43,13 @@ bot.launch().then();
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
+
+
+// bot.on(message('sticker'), (ctx) => ctx.reply('🖕🏻'))
+// bot.on(message('text'),  (ctx) => {
+//   if (ctx.message.text !== "start") {
+//     ctx.reply('🤌🏻')
+//   }
+// });
+// bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+// bot.launch().then()
