@@ -1,38 +1,16 @@
 console.log("HELLLLLO")
 require('dotenv')
 
-// const TeleBot = require('telebot');
-const TeleBot = require('node-telegram-bot-api');
-const bot = new TeleBot(process.env.BOT_TOKEN);
+const { Telegraf } = require('telegraf')
+const { message } = require('telegraf/filters')
 
-// bot.on('/start', (msg) => msg.reply.text('Welcome!'));
-// bot.on('text', (msg) => msg.reply.text("Hello, so you said " + msg.text));
-//
-// bot.on(/(show\s)?kitty*/, (msg) => {
-//   return msg.reply.photo('http://thecatapi.com/api/images/get');
-// });
+const bot = new Telegraf(process.env.BOT_TOKEN)
+bot.start((ctx) => ctx.reply('Welcome'))
+bot.help((ctx) => ctx.reply('Send me a sticker'))
+bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
+bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+bot.launch().then()
 
-// Listen to /start command
-bot.onText(/\/btn/, (msg) => {
-  bot.sendMessage(msg.chat.id, 'لطفا یک گزینه را انتخاب کنید:', {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          { text: 'گزینه 1', callback_data: 'option1' },
-          { text: 'گزینه 2', callback_data: 'option2' }
-        ]
-      ]
-    }
-  });
-});
-
-// Handle button click
-bot.on('callback_query', (query) => {
-  const chatId = query.message.chat.id;
-  const data = query.data;
-
-  bot.sendMessage(chatId, `شما گزینه "${data}" را انتخاب کردید.`);
-});
-
-
-bot.start();
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'))
+process.once('SIGTERM', () => bot.stop('SIGTERM'))
