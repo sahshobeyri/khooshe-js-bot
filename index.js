@@ -9,15 +9,15 @@ const HELP_MSG = "برای یادگیری حبه به حبه، جای درستی
 const SELECT_LESSON_MSG = "لطفا درس مورد نظرتون رو انتخاب کنید."
 
 const LESSONS = [
-  {title: "درس شماره 1"},
-  {title: "درس شماره 2"},
-  {title: "درس شماره 3"},
+  {title: "مکانیک کوانتوم"},
+  {title: "اصول رهبری و مذاکره"},
+  {title: "نحو عربی"},
 ];
 
 function generate_lessons_list(){
   let result = ""
-  for (const l of LESSONS) {
-    result += l.title + "\n"
+  for (const idx in LESSONS) {
+    result += `${idx}. ${LESSONS[idx].title}!`
   }
   return result
 }
