@@ -71,3 +71,5 @@ process.once('SIGTERM', () => bot.stop('SIGTERM'))
 // });
 // bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 // bot.launch().then()
+
+//ctx.reply(`Hello ${ctx.update.message.from.first_name}!`)
