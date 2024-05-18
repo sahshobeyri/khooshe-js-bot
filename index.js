@@ -52,6 +52,8 @@ bot.command('quiz', (ctx) => {
   );
 });
 
+bot.command('debug',(ctx) => console.log(ctx))
+
 bot.action('option1', (ctx) => ctx.reply('شما گزینه 1 را انتخاب کردید.'));
 bot.action('option2', (ctx) => ctx.reply('شما گزینه 2 را انتخاب کردید.'));
 
