@@ -23,6 +23,8 @@ bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزین
   }
 }));
 
+bot.command('quiz',ctx => ctx.sendQuiz('Do you Like Me? Do you do you?',['YES','NO']))
+
 bot.action('option1', (ctx) => ctx.reply('شما گزینه 1 را انتخاب کردید.'));
 bot.action('option2', (ctx) => ctx.reply('شما گزینه 2 را انتخاب کردید.'));
 
