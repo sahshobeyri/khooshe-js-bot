@@ -4,10 +4,13 @@ require('dotenv')
 const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
 
+const WELCOME_MSG = "به خوشه خوش آمدید. 🍇"
+const HELP_MSG = "برای یادگیری حبه به حبه، جای درستی رو انتخاب کردید."
+
 const bot = new Telegraf(process.env.BOT_TOKEN)
-bot.start((ctx) => ctx.reply('Welcome'))
-bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on(message('sticker'), (ctx) => ctx.reply('🖕🏻'))
+bot.start((ctx) => ctx.reply(WELCOME_MSG))
+bot.help((ctx) => ctx.reply(HELP_MSG))
+// bot.on(message('sticker'), (ctx) => ctx.reply('🖕🏻'))
 bot.on(message('text'),  (ctx) => {
   if (ctx.message.text !== "start") {
     ctx.reply('🤌🏻')
