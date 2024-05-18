@@ -12,7 +12,7 @@ bot.on(message('text'),  (ctx) => ctx.reply('🤌🏻'))
 // bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 // bot.launch().then()
 
-bot.start((ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
+bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
   reply_markup: {
     inline_keyboard: [
       [
