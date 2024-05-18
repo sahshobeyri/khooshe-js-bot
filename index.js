@@ -23,7 +23,17 @@ bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزین
   }
 }));
 
-bot.command('quiz',ctx => ctx.telegram.sendQuiz(ctx.chat_id,'Do you Like Me? Do you do you?',['YES','NO']))
+bot.command('quiz', (ctx) => {
+  ctx.replyWithQuiz(
+    'Do you Like Me? Do you do you?', // متن سوال
+    ['YES','NO'], // گزینه های سوال
+    {
+      correct_option_id: 0, // گزینه صحیح (شروع از 0)
+      is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
+      explanation: 'I Like You too' // توضیحات پاسخ صحیح (دلخواه)
+    }
+  );
+});
 
 bot.action('option1', (ctx) => ctx.reply('شما گزینه 1 را انتخاب کردید.'));
 bot.action('option2', (ctx) => ctx.reply('شما گزینه 2 را انتخاب کردید.'));
