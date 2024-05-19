@@ -42,6 +42,10 @@ const LESSONS = [
   },
 ];
 
+function getLesson(id) {
+  return LESSONS.find(l => l.id === id)
+}
+
 function generateLessonsList() {
   let result = ""
   for (const idx in LESSONS) {
@@ -109,7 +113,13 @@ bot.action(/^option-(\d+)$/, (ctx) => {
 
 bot.action(/^load-lesson-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
-  const lesson = LESSONS.find(l => l.id === +(ctx.match[1]))
+  const lesson = getLesson(+(ctx.match[1]))
+  lessonIntroPage(ctx, lesson)
+});
+
+bot.action(/^start-lesson-(\d+)$/, (ctx) => {
+  ctx.deleteMessage()
+  const lesson = getLesson(+(ctx.match[1]))
   lessonIntroPage(ctx, lesson)
 });
 
