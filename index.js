@@ -64,12 +64,12 @@ bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
 bot.action("delete", ctx => ctx.deleteMessage());
 
 bot.action('option1', (ctx) => {
-  ctx.reply('شما گزینه 1 را انتخاب کردید.')
   ctx.deleteMessage()
+  ctx.reply('شما گزینه 1 را انتخاب کردید.', keyboard)
 });
 bot.action('option2', (ctx) => {
-  ctx.reply('شما گزینه 2 را انتخاب کردید.')
   ctx.deleteMessage()
+  ctx.reply('شما گزینه 2 را انتخاب کردید.', keyboard)
 });
 
 bot.launch().then();
