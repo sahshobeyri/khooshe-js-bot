@@ -97,6 +97,12 @@ bot.action(/^option-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
   ctx.reply(`شما گزینه ${ctx.match[1]} را انتخاب کردید`, keyboard)
 });
+
+bot.action(/^load-lesson-(\d+)$/, (ctx) => {
+  ctx.deleteMessage()
+  const lesson = LESSONS.find(l => l.id === +(ctx.match[1]))
+  ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, keyboard)
+});
 // bot.action('option', (ctx) => {
 //   ctx.deleteMessage()
 //   ctx.reply('شما گزینه 2 را انتخاب کردید.', keyboard)
