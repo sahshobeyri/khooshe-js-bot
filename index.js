@@ -117,10 +117,6 @@ bot.action("load-lessons", (ctx) => {
   ctx.deleteMessage()
   selectLessonsPage(ctx)
 });
-// bot.action('option', (ctx) => {
-//   ctx.deleteMessage()
-//   ctx.reply('شما گزینه 2 را انتخاب کردید.', keyboard)
-// });
 
 bot.launch().then();
 
