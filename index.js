@@ -69,6 +69,9 @@ const lessonIntroKeyboard = (l) =>
 const selectLessonsPage = (ctx) =>
   ctx.reply(SELECT_LESSON_MSG,lessonSelectionKeyboard);
 
+const lessonIntroPage = (ctx, lesson) =>
+  ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
+
 const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
 bot.help((ctx) => ctx.reply(HELP_MSG))
@@ -107,7 +110,7 @@ bot.action(/^option-(\d+)$/, (ctx) => {
 bot.action(/^load-lesson-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
   const lesson = LESSONS.find(l => l.id === +(ctx.match[1]))
-  ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
+  lessonIntroPage(ctx, lesson)
 });
 
 bot.action("load-lessons", (ctx) => {
