@@ -4,6 +4,9 @@ require('dotenv')
 const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
 
+const { BOT_TOKEN } = process.env;
+if (!BOT_TOKEN) throw new Error('"BOT_TOKEN" env var is required!');
+
 const WELCOME_MSG = "به خوشه خوش آمدید. 🍇"
 const HELP_MSG = "برای یادگیری حبه به حبه، جای درستی رو انتخاب کردید."
 const SELECT_LESSON_MSG = "لطفا درس مورد نظرتون رو انتخاب کنید."
@@ -22,7 +25,7 @@ function generate_lessons_list(){
   return result
 }
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
 bot.help((ctx) => ctx.reply(HELP_MSG))
 bot.command('select_lesson',(ctx) => {
@@ -39,7 +42,6 @@ bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزین
     ]
   }
 }));
-
 bot.command('quiz', (ctx) => {
   ctx.replyWithQuiz(
     'Do you Like Me? Do you do you?', // متن سوال
@@ -51,7 +53,6 @@ bot.command('quiz', (ctx) => {
     }
   );
 });
-
 bot.command('debug',(ctx) => console.log(ctx))
 
 bot.action('option1', (ctx) => ctx.reply('شما گزینه 1 را انتخاب کردید.'));
