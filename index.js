@@ -66,13 +66,13 @@ const lessonIntroKeyboard = (l) =>
     Markup.button.callback("بازگشت", "load-lessons"),
   ]);
 
+const selectLessonsPage = (ctx) =>
+  ctx.reply(SELECT_LESSON_MSG,lessonSelectionKeyboard);
+
 const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
 bot.help((ctx) => ctx.reply(HELP_MSG))
-bot.command('select_lesson', (ctx) => {
-  ctx.reply(SELECT_LESSON_MSG,lessonSelectionKeyboard)
-  // ctx.reply(generateLessonsList())
-})
+bot.command('select_lesson', selectLessonsPage)
 bot.command('select', (ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
   reply_markup: {
     inline_keyboard: [
@@ -108,6 +108,11 @@ bot.action(/^load-lesson-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
   const lesson = LESSONS.find(l => l.id === +(ctx.match[1]))
   ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
+});
+
+bot.action("load-lessons", (ctx) => {
+  ctx.deleteMessage()
+  selectLessonsPage(ctx)
 });
 // bot.action('option', (ctx) => {
 //   ctx.deleteMessage()
