@@ -1,7 +1,7 @@
 console.log("HELLLLLO")
 require('dotenv')
 
-const { Telegraf } = require('telegraf')
+const { Telegraf, Markup} = require('telegraf')
 const { message } = require('telegraf/filters')
 
 const { BOT_TOKEN } = process.env;
@@ -24,6 +24,11 @@ function generate_lessons_list(){
   }
   return result
 }
+
+const keyboard = Markup.inlineKeyboard([
+  Markup.button.url("❤️", "http://telegraf.js.org"),
+  Markup.button.callback("Delete", "delete"),
+]);
 
 const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
@@ -54,6 +59,9 @@ bot.command('quiz', (ctx) => {
   );
 });
 bot.command('debug',(ctx) => console.log(ctx))
+
+bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
+bot.action("delete", ctx => ctx.deleteMessage());
 
 bot.action('option1', (ctx) => ctx.reply('شما گزینه 1 را انتخاب کردید.'));
 bot.action('option2', (ctx) => ctx.reply('شما گزینه 2 را انتخاب کردید.'));
