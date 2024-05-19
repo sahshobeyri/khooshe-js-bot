@@ -1,10 +1,10 @@
 console.log("HELLLLLO")
 require('dotenv')
 
-const { Telegraf, Markup} = require('telegraf')
-const { message } = require('telegraf/filters')
+const {Telegraf, Markup} = require('telegraf')
+const {message} = require('telegraf/filters')
 
-const { BOT_TOKEN } = process.env;
+const {BOT_TOKEN} = process.env;
 if (!BOT_TOKEN) throw new Error('"BOT_TOKEN" env var is required!');
 
 const WELCOME_MSG = "به خوشه خوش آمدید. 🍇"
@@ -12,12 +12,37 @@ const HELP_MSG = "برای یادگیری حبه به حبه، جای درستی
 const SELECT_LESSON_MSG = "لطفا درس مورد نظرتون رو انتخاب کنید."
 
 const LESSONS = [
-  {title: "مکانیک کوانتوم"},
-  {title: "اصول رهبری و مذاکره"},
-  {title: "نحو عربی"},
+  {
+    id:0,
+    title: "مکانیک کوانتوم",
+    frames: [
+      "مکانیک کوانتوم، فریم اول",
+      "مکانیک کوانتوم، فریم دوم",
+      "مکانیک کوانتوم، فریم سوم",
+    ]
+  },
+  {
+    id:1,
+    title: "اصول رهبری و مذاکره",
+    frames: [
+      "اصول رهبری و مذاکره، فریم اول",
+      "اصول رهبری و مذاکره، فریم دوم",
+      "اصول رهبری و مذاکره، فریم سوم",
+    ]
+  },
+  {
+    id:2,
+    title: "نحو عربی",
+    frames: [
+      "نحو عربی، فریم اول",
+      "نحو عربی، فریم دوم",
+      "نحو عربی، فریم سوم",
+      "نحو عربی، فریم چهارم",
+    ]
+  },
 ];
 
-function generate_lessons_list(){
+function generateLessonsList() {
   let result = ""
   for (const idx in LESSONS) {
     result += `${+idx + 1}. ${LESSONS[idx].title}` + "\n"
@@ -30,19 +55,24 @@ const keyboard = Markup.inlineKeyboard([
   Markup.button.callback("Delete", "delete"),
 ]);
 
+const lessonSelectionKeyboard =
+  Markup.inlineKeyboard(LESSONS.map(l=>
+    Markup.button.callback(`${l.title}`, `load-lesson-${l.id}`))
+  );
+
 const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
 bot.help((ctx) => ctx.reply(HELP_MSG))
-bot.command('select_lesson',(ctx) => {
-  ctx.reply(SELECT_LESSON_MSG)
-  ctx.reply(generate_lessons_list())
+bot.command('select_lesson', (ctx) => {
+  ctx.reply(SELECT_LESSON_MSG,lessonSelectionKeyboard)
+  // ctx.reply(generateLessonsList())
 })
-bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
+bot.command('select', (ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
   reply_markup: {
     inline_keyboard: [
       [
-        { text: 'گزینه 1', callback_data: 'option-1' },
-        { text: 'گزینه 2', callback_data: 'option-2' }
+        {text: 'گزینه 1', callback_data: 'option-1'},
+        {text: 'گزینه 2', callback_data: 'option-2'}
       ]
     ]
   }
@@ -50,7 +80,7 @@ bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزین
 bot.command('quiz', (ctx) => {
   ctx.replyWithQuiz(
     'Do you Like Me? Do you do you?', // متن سوال
-    ['YES','NO'], // گزینه های سوال
+    ['YES', 'NO'], // گزینه های سوال
     {
       correct_option_id: 0, // گزینه صحیح (شروع از 0)
       is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
@@ -58,7 +88,7 @@ bot.command('quiz', (ctx) => {
     }
   );
 });
-bot.command('debug',(ctx) => console.log(ctx))
+bot.command('debug', (ctx) => console.log(ctx))
 
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
 bot.action("delete", ctx => ctx.deleteMessage());
