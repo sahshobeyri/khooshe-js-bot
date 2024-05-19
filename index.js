@@ -63,8 +63,14 @@ bot.command('debug',(ctx) => console.log(ctx))
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
 bot.action("delete", ctx => ctx.deleteMessage());
 
-bot.action('option1', (ctx) => ctx.reply('شما گزینه 1 را انتخاب کردید.'));
-bot.action('option2', (ctx) => ctx.reply('شما گزینه 2 را انتخاب کردید.'));
+bot.action('option1', (ctx) => {
+  ctx.reply('شما گزینه 1 را انتخاب کردید.')
+  ctx.deleteMessage()
+});
+bot.action('option2', (ctx) => {
+  ctx.reply('شما گزینه 2 را انتخاب کردید.')
+  ctx.deleteMessage()
+});
 
 bot.launch().then();
 
