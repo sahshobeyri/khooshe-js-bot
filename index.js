@@ -41,8 +41,8 @@ bot.command('select',(ctx) => ctx.reply('سلام! لطفا یکی از گزین
   reply_markup: {
     inline_keyboard: [
       [
-        { text: 'گزینه 1', callback_data: 'option1' },
-        { text: 'گزینه 2', callback_data: 'option2' }
+        { text: 'گزینه 1', callback_data: 'option-1' },
+        { text: 'گزینه 2', callback_data: 'option-2' }
       ]
     ]
   }
@@ -63,14 +63,14 @@ bot.command('debug',(ctx) => console.log(ctx))
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
 bot.action("delete", ctx => ctx.deleteMessage());
 
-bot.action('option1', (ctx) => {
+bot.action(/^option-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
-  ctx.reply('شما گزینه 1 را انتخاب کردید.', keyboard)
+  ctx.reply(`شما گزینه ${ctx.match[1]} را انتخاب کردید`, keyboard)
 });
-bot.action('option2', (ctx) => {
-  ctx.deleteMessage()
-  ctx.reply('شما گزینه 2 را انتخاب کردید.', keyboard)
-});
+// bot.action('option', (ctx) => {
+//   ctx.deleteMessage()
+//   ctx.reply('شما گزینه 2 را انتخاب کردید.', keyboard)
+// });
 
 bot.launch().then();
 
