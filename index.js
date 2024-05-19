@@ -107,7 +107,7 @@ bot.action(/^option-(\d+)$/, (ctx) => {
 bot.action(/^load-lesson-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
   const lesson = LESSONS.find(l => l.id === +(ctx.match[1]))
-  ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(l))
+  ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
 });
 // bot.action('option', (ctx) => {
 //   ctx.deleteMessage()
