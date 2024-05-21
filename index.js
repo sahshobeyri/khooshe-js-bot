@@ -64,15 +64,16 @@ const lessonSelectionKeyboard =
     Markup.button.callback(`${l.title}`, `load-lesson-${l.id}`))
   );
 
-const lessonSlideKeyboard = (l,slideIdx) =>
-  Markup.inlineKeyboard([
-    Markup.button.callback(
-      "اسلاید قبل", `load-lesson-${l.id}-slide-${slideIdx - 1}`
-    ),
-    Markup.button.callback(
-      "اسلاید بعد", `load-lesson-${l.id}-slide-${slideIdx + 1}`
-    ),
-  ]);
+const lessonSlideKeyboard = (l,slideIdx) => {
+  let btn_arr = []
+  if (slideIdx > 0) {
+    btn_arr.push(Markup.button.callback("اسلاید قبل", `load-lesson-${l.id}-slide-${slideIdx - 1}`))
+  }
+  if (slideIdx < l.frames.length) {
+    btn_arr.push(Markup.button.callback("اسلاید بعد", `load-lesson-${l.id}-slide-${slideIdx + 1}`))
+  }
+  return Markup.inlineKeyboard(btn_arr);
+}
 
 const lessonIntroKeyboard = (l) =>
   Markup.inlineKeyboard([
