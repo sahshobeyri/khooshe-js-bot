@@ -64,6 +64,16 @@ const lessonSelectionKeyboard =
     Markup.button.callback(`${l.title}`, `load-lesson-${l.id}`))
   );
 
+const lessonSlideKeyboard = (l,slideIdx) =>
+  Markup.inlineKeyboard([
+    Markup.button.callback(
+      "اسلاید قبل", `load-lesson-${l.id}-slide-${slideIdx - 1}`
+    ),
+    Markup.button.callback(
+      "اسلاید بعد", `load-lesson-${l.id}-slide-${slideIdx + 1}`
+    ),
+  ]);
+
 const lessonIntroKeyboard = (l) =>
   Markup.inlineKeyboard([
     Markup.button.callback("شروع درس", `start-lesson-${l.id}`),
@@ -75,6 +85,9 @@ const selectLessonsPage = (ctx) =>
 
 const lessonIntroPage = (ctx, lesson) =>
   ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
+
+const lessonSlidePage = (ctx, lesson, slideIdx) =>
+  ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
 
 const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
@@ -120,7 +133,13 @@ bot.action(/^load-lesson-(\d+)$/, (ctx) => {
 bot.action(/^start-lesson-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
-  lessonIntroPage(ctx, lesson)
+  lessonSlidePage(ctx, lesson, 0)
+});
+
+bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, (ctx) => {
+  ctx.deleteMessage()
+  const lesson = getLesson(+(ctx.match[1]))
+  lessonSlidePage(ctx, lesson, +(ctx.match[2]))
 });
 
 bot.action("load-lessons", (ctx) => {
