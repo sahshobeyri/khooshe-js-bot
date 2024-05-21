@@ -71,9 +71,17 @@ const lessonSlideKeyboard = (l,slideIdx) => {
   }
   if (slideIdx < l.frames.length - 1) {
     btn_arr.push(Markup.button.callback("اسلاید بعد", `load-lesson-${l.id}-slide-${slideIdx + 1}`))
+  }else {
+    btn_arr.push(Markup.button.callback("پایان درس", `finish-lesson-${l.id}`))
   }
   return Markup.inlineKeyboard(btn_arr);
 }
+
+const lessonFinishKeyboard= (l) =>
+  Markup.inlineKeyboard([
+    Markup.button.callback("از اول", `start-lesson-${l.id}`),
+    Markup.button.callback("لیست درس ها", "load-lessons"),
+  ]);
 
 const lessonIntroKeyboard = (l) =>
   Markup.inlineKeyboard([
@@ -89,6 +97,9 @@ const lessonIntroPage = (ctx, lesson) =>
 
 const lessonSlidePage = (ctx, lesson, slideIdx) =>
   ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
+
+const lessonFinishPage = (ctx, lesson) =>
+  ctx.reply('Lesson Finished', lessonFinishKeyboard(lesson));
 
 const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
@@ -135,6 +146,12 @@ bot.action(/^start-lesson-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   lessonSlidePage(ctx, lesson, 0)
+});
+
+bot.action(/^finish-lesson-(\d+)$/, (ctx) => {
+  ctx.deleteMessage()
+  const lesson = getLesson(+(ctx.match[1]))
+  lessonFinishPage(ctx, lesson)
 });
 
 bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, (ctx) => {
