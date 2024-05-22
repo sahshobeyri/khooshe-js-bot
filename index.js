@@ -127,6 +127,7 @@ bot.command('quiz', (ctx) => {
   );
 });
 bot.command('debug', (ctx) => console.log(ctx))
+bot.command('image', (ctx) => ctx.replyWithPhoto("https://picsum.photos/200/300/?random"))
 
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
 bot.action("delete", ctx => ctx.deleteMessage());
