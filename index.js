@@ -130,8 +130,8 @@ bot.command('debug', (ctx) => console.log(ctx))
 // bot.command('image', (ctx) => ctx.replyWithPhoto("https://picsum.photos/320/180/?random"))
 // bot.command('image', (ctx) => ctx.replyWithPhoto({ source: "/img/genie15.png" }))
 bot.command('image', (ctx) => {
-  ctx.replyWithPhoto("https://github.com/sahshobeyri/khooshe-js-bot/blob/master/img/genie15.png", {
-    caption: "Caption *text*",
+  ctx.replyWithPhoto("https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/img/genie15.png", {
+    caption: "غول چراغ جادوی تستی",
     parse_mode: "Markdown",
   })
 });
