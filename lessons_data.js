@@ -1,4 +1,4 @@
-export const LESSONS = [
+module.exports = [
   {
     id:0,
     title: "مکانیک کوانتوم",
