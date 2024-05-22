@@ -1,6 +1,6 @@
 console.log("HELLLLLO")
 require('dotenv')
-const {LESSONS} = require('lessons_data')
+const {LESSONS} = require('./lessons_data.js')
 const {Telegraf, Markup} = require('telegraf')
 const {message} = require('telegraf/filters')
 
