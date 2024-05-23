@@ -162,10 +162,11 @@ bot.command('image', (ctx) => {
   //   console.log(err);
   //   return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
   // }
-  ctx.replyWithPhoto("https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/img/genie5.png", {
-    caption: "غول چراغ جادوی تستی",
-    parse_mode: "Markdown",
-  })
+  ctx.reply("OK")
+  // ctx.replyWithPhoto("https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/img/genie5.png", {
+  //   caption: "غول چراغ جادوی تستی",
+  //   parse_mode: "Markdown",
+  // })
 });
 
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
