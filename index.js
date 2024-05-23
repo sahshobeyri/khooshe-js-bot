@@ -96,8 +96,22 @@ const selectLessonsPage = (ctx) =>
 const lessonIntroPage = (ctx, lesson) =>
   ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
 
-const lessonSlidePage = (ctx, lesson, slideIdx) =>
-  ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
+// const lessonSlidePage = (ctx, lesson, slideIdx) =>
+//   ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
+
+const lessonSlidePage = (ctx, lesson, slideIdx) => {
+  const photoPath = `img/lessons/${lesson.id}/${slideIdx}.png`;
+  try {
+    const photoStream = fs.createReadStream(photoPath);
+    return ctx.replyWithPhoto(
+      { source: photoStream },
+      lessonSlideKeyboard(lesson,slideIdx)
+    );
+  } catch (err) {
+    console.log(err);
+    return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+  }
+}
 
 const lessonFinishPage = (ctx, lesson) =>
   ctx.reply('Lesson Finished', lessonFinishKeyboard(lesson));
@@ -128,8 +142,6 @@ bot.command('quiz', (ctx) => {
   );
 });
 bot.command('debug', (ctx) => console.log(ctx))
-// bot.command('image', (ctx) => ctx.replyWithPhoto("https://picsum.photos/320/180/?random"))
-// bot.command('image', (ctx) => ctx.replyWithPhoto({ source: "/img/genie15.png" }))
 bot.command('image', (ctx) => {
   const photoPath = 'img/genie15.png';
   try {
