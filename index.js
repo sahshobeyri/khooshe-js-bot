@@ -70,7 +70,7 @@ const lessonSlideKeyboard = (l,slideIdx) => {
   if (slideIdx > 0) {
     btn_arr.push(Markup.button.callback("اسلاید قبل", `load-lesson-${l.id}-slide-${slideIdx - 1}`))
   }
-  if (slideIdx < l.frames.length - 1) {
+  if (slideIdx < l.length - 1) {
     btn_arr.push(Markup.button.callback("اسلاید بعد", `load-lesson-${l.id}-slide-${slideIdx + 1}`))
   }else {
     btn_arr.push(Markup.button.callback("پایان درس", `finish-lesson-${l.id}`))
