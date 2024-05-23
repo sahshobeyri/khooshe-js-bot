@@ -100,7 +100,7 @@ const lessonIntroPage = (ctx, lesson) =>
 //   ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
 
 const lessonSlidePage = (ctx, lesson, slideIdx) => {
-  const photoPath = `img/lessons/${lesson.id}/${slideIdx}.png`;
+  const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.png`;
   try {
     const photoStream = fs.createReadStream(photoPath);
     return ctx.replyWithPhoto(
