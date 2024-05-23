@@ -116,7 +116,11 @@ const lessonSlidePage = (ctx, lesson, slideIdx) => {
   try {
     return ctx.replyWithPhoto(
       photoPath,
-      lessonSlideKeyboard(lesson,slideIdx)
+      {
+        caption: photoPath,
+        parse_mode: 'Markdown',
+        ...lessonSlideKeyboard(lesson,slideIdx),
+      },
     );
   } catch (err) {
     console.log(err);
