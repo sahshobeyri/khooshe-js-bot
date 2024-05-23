@@ -100,11 +100,22 @@ const lessonIntroPage = (ctx, lesson) =>
 //   ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
 
 const lessonSlidePage = (ctx, lesson, slideIdx) => {
-  const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.png`;
+  // const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.png`;
+  // try {
+  //   const photoStream = fs.createReadStream(photoPath);
+  //   return ctx.replyWithPhoto(
+  //     { source: photoStream },
+  //     lessonSlideKeyboard(lesson,slideIdx)
+  //   );
+  // } catch (err) {
+  //   console.log(err);
+  //   return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+  // }
+  const photoBasePath = 'https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/'
+  const photoPath = photoBasePath + `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
   try {
-    const photoStream = fs.createReadStream(photoPath);
     return ctx.replyWithPhoto(
-      { source: photoStream },
+      photoPath,
       lessonSlideKeyboard(lesson,slideIdx)
     );
   } catch (err) {
