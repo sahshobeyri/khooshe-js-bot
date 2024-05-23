@@ -2,6 +2,7 @@ console.log("HELLLLLO")
 require('dotenv')
 const LESSONS = require('./lessons_data.js')
 const {Telegraf, Markup} = require('telegraf')
+const fs = require('fs');
 const {message} = require('telegraf/filters')
 
 const {BOT_TOKEN} = process.env;
@@ -130,10 +131,18 @@ bot.command('debug', (ctx) => console.log(ctx))
 // bot.command('image', (ctx) => ctx.replyWithPhoto("https://picsum.photos/320/180/?random"))
 // bot.command('image', (ctx) => ctx.replyWithPhoto({ source: "/img/genie15.png" }))
 bot.command('image', (ctx) => {
-  ctx.replyWithPhoto("https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/img/genie15.png", {
-    caption: "غول چراغ جادوی تستی",
-    parse_mode: "Markdown",
-  })
+  const photoPath = 'img/genie15.png';
+  try {
+    const photoStream = fs.createReadStream(photoPath);
+    return ctx.replyWithPhoto({ source: photoStream });
+  } catch (err) {
+    console.log(err);
+    return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+  }
+  // ctx.replyWithPhoto("https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/img/genie15.png", {
+  //   caption: "غول چراغ جادوی تستی",
+  //   parse_mode: "Markdown",
+  // })
 });
 
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
