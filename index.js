@@ -124,8 +124,19 @@ const lessonSlidePage = (ctx, lesson, slideIdx) => {
   }
 }
 
-const lessonFinishPage = (ctx, lesson) =>
-  ctx.reply('Lesson Finished', lessonFinishKeyboard(lesson));
+const lessonFinishPage = (ctx, lesson) => {
+  const photoPath = `img/lessons/lessonFinished.PNG`;
+  try {
+    const photoStream = fs.createReadStream(photoPath);
+    return ctx.replyWithPhoto(
+      { source: photoStream },
+      lessonFinishKeyboard(lesson)
+    );
+  } catch (err) {
+    console.log(err);
+    return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+  }
+}
 
 const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => ctx.reply(WELCOME_MSG))
