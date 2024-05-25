@@ -93,8 +93,23 @@ const lessonIntroKeyboard = (l) =>
 const selectLessonsPage = (ctx) =>
   ctx.reply(SELECT_LESSON_MSG,lessonSelectionKeyboard);
 
-const lessonIntroPage = (ctx, lesson) =>
-  ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
+const lessonIntroPage = (ctx, lesson) => {
+  const photoPath = `img/lessons/l${lesson.id}/intro.PNG`;
+  try {
+    const photoStream = fs.createReadStream(photoPath);
+    return ctx.replyWithPhoto(
+      { source: photoStream },
+      {
+        caption: `شما درس ${lesson.title} را انتخاب کردید`,
+        ...lessonIntroKeyboard(lesson),
+      },
+    );
+  } catch (err) {
+    console.log(err);
+    return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+  }
+  // return ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
+}
 
 // const lessonSlidePage = (ctx, lesson, slideIdx) =>
 //   ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
