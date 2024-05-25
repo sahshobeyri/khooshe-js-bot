@@ -100,32 +100,32 @@ const lessonIntroPage = (ctx, lesson) =>
 //   ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
 
 const lessonSlidePage = (ctx, lesson, slideIdx) => {
-  // const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.png`;
-  // try {
-  //   const photoStream = fs.createReadStream(photoPath);
-  //   return ctx.replyWithPhoto(
-  //     { source: photoStream },
-  //     lessonSlideKeyboard(lesson,slideIdx)
-  //   );
-  // } catch (err) {
-  //   console.log(err);
-  //   return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
-  // }
-  const photoBasePath = 'https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/'
-  const photoPath = photoBasePath + `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
+  const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
   try {
+    const photoStream = fs.createReadStream(photoPath);
     return ctx.replyWithPhoto(
-      photoPath,
-      {
-        caption: photoPath,
-        parse_mode: 'Markdown',
-        ...lessonSlideKeyboard(lesson,slideIdx),
-      },
+      { source: photoStream },
+      lessonSlideKeyboard(lesson,slideIdx)
     );
   } catch (err) {
     console.log(err);
     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
   }
+  // const photoBasePath = 'https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/'
+  // const photoPath = photoBasePath + `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
+  // try {
+  //   return ctx.replyWithPhoto(
+  //     photoPath,
+  //     {
+  //       caption: photoPath,
+  //       parse_mode: 'Markdown',
+  //       ...lessonSlideKeyboard(lesson,slideIdx),
+  //     },
+  //   );
+  // } catch (err) {
+  //   console.log(err);
+  //   return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+  // }
 }
 
 const lessonFinishPage = (ctx, lesson) =>
