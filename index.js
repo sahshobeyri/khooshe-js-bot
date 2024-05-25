@@ -108,11 +108,7 @@ const lessonIntroPage = (ctx, lesson) => {
     console.log(err);
     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
   }
-  // return ctx.reply(`شما درس ${lesson.title} را انتخاب کردید`, lessonIntroKeyboard(lesson))
 }
-
-// const lessonSlidePage = (ctx, lesson, slideIdx) =>
-//   ctx.reply(lesson.frames[slideIdx], lessonSlideKeyboard(lesson,slideIdx));
 
 const lessonSlidePage = (ctx, lesson, slideIdx) => {
   const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
@@ -126,21 +122,6 @@ const lessonSlidePage = (ctx, lesson, slideIdx) => {
     console.log(err);
     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
   }
-  // const photoBasePath = 'https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/'
-  // const photoPath = photoBasePath + `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
-  // try {
-  //   return ctx.replyWithPhoto(
-  //     photoPath,
-  //     {
-  //       caption: photoPath,
-  //       parse_mode: 'Markdown',
-  //       ...lessonSlideKeyboard(lesson,slideIdx),
-  //     },
-  //   );
-  // } catch (err) {
-  //   console.log(err);
-  //   return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
-  // }
 }
 
 const lessonFinishPage = (ctx, lesson) =>
