@@ -158,7 +158,7 @@ bot.command('quiz', (ctx) => {
 });
 bot.command('debug', (ctx) => console.log(ctx))
 bot.command('image', (ctx) => {
-  const photoPath = 'img/genie5.PNG';
+  const photoPath = 'img/genie5.png';
   try {
     const photoStream = fs.createReadStream(photoPath);
     return ctx.replyWithPhoto({ source: photoStream });
