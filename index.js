@@ -187,7 +187,7 @@ bot.action(/^option-(\d+)$/, (ctx) => {
 });
 
 bot.action(/^load-lesson-(\d+)$/, (ctx) => {
-  // ctx.deleteMessage()
+  ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   lessonIntroPage(ctx, lesson)
 });
@@ -211,7 +211,7 @@ bot.action(/^quiz-lesson-(\d+)$/, (ctx) => {
 });
 
 bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, (ctx) => {
-  ctx.deleteMessage()
+  // ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   lessonSlidePage(ctx, lesson, +(ctx.match[2]))
 });
