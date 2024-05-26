@@ -8,6 +8,7 @@ let db;
 
 MongoClient.connect(url, (err, client) => {
   if (err) {
+    console.log("EROROE DB")
     console.error(err);
   } else {
     console.log('Connected to MongoDB');
