@@ -147,7 +147,7 @@ const lessonQuizPage = (ctx, lesson) => {
     {
       correct_option_id: q.correct, // گزینه صحیح (شروع از 0)
       is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
-      explanation: 'I Like You too' // توضیحات پاسخ صحیح (دلخواه)
+      explanation: q.explain // توضیحات پاسخ صحیح (دلخواه)
     }
   );
 }
