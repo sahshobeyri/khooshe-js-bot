@@ -155,8 +155,8 @@ const lessonQuizPage = (ctx, lesson) => {
       is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
       explanation: q.explain // توضیحات پاسخ صحیح (دلخواه)
     },
-    lessonQuizKeyboard(lesson)
   );
+  ctx.reply('بعد از این کجا میرید؟',lessonQuizKeyboard(lesson))
 }
 
 const bot = new Telegraf(BOT_TOKEN)
