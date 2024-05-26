@@ -78,10 +78,16 @@ const lessonSlideKeyboard = (l,slideIdx) => {
   return Markup.inlineKeyboard(btn_arr);
 }
 
-const lessonFinishKeyboard= (l) =>
+const lessonFinishKeyboard = (l) =>
   Markup.inlineKeyboard([
     Markup.button.callback("از اول", `start-lesson-${l.id}`),
     Markup.button.callback("کوئیز", `quiz-lesson-${l.id}`),
+    Markup.button.callback("لیست درس ها", "load-lessons"),
+  ]);
+
+const lessonQuizKeyboard = (l) =>
+  Markup.inlineKeyboard([
+    Markup.button.callback("دوباره بخونمش", `start-lesson-${l.id}`),
     Markup.button.callback("لیست درس ها", "load-lessons"),
   ]);
 
@@ -148,7 +154,8 @@ const lessonQuizPage = (ctx, lesson) => {
       correct_option_id: q.correct, // گزینه صحیح (شروع از 0)
       is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
       explanation: q.explain // توضیحات پاسخ صحیح (دلخواه)
-    }
+    },
+    lessonQuizKeyboard(lesson)
   );
 }
 
