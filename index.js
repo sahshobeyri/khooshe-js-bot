@@ -81,6 +81,7 @@ const lessonSlideKeyboard = (l,slideIdx) => {
 const lessonFinishKeyboard= (l) =>
   Markup.inlineKeyboard([
     Markup.button.callback("از اول", `start-lesson-${l.id}`),
+    Markup.button.callback("کوئیز", `quiz-lesson-${l.id}`),
     Markup.button.callback("لیست درس ها", "load-lessons"),
   ]);
 
@@ -136,6 +137,19 @@ const lessonFinishPage = (ctx, lesson) => {
     console.log(err);
     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
   }
+}
+
+const lessonQuizPage = (ctx, lesson) => {
+  const q = lesson.quiz
+  ctx.replyWithQuiz(
+    q.question, // متن سوال
+    q.options, // گزینه های سوال
+    {
+      correct_option_id: q.correct, // گزینه صحیح (شروع از 0)
+      is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
+      explanation: 'I Like You too' // توضیحات پاسخ صحیح (دلخواه)
+    }
+  );
 }
 
 const bot = new Telegraf(BOT_TOKEN)
@@ -204,6 +218,12 @@ bot.action(/^finish-lesson-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   lessonFinishPage(ctx, lesson)
+});
+
+bot.action(/^quiz-lesson-(\d+)$/, (ctx) => {
+  ctx.deleteMessage()
+  const lesson = getLesson(+(ctx.match[1]))
+  lessonQuizPage(ctx, lesson)
 });
 
 bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, (ctx) => {
