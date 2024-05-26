@@ -6,6 +6,8 @@ const dbName = 'KhoosheDB';
 
 let db;
 
+console.log("I AM DB CODE!")
+
 MongoClient.connect(url, (err, client) => {
   if (err) {
     console.log("EROROE DB")
