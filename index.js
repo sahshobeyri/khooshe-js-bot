@@ -86,17 +86,30 @@ const lessonIntroPage = (ctx, lesson) => {
   }
 }
 
-const lessonSlidePage = (ctx, lesson, slideIdx) => {
+const lessonSlidePage = (ctx, lesson, slideIdx, initial = false) => {
   const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
-  try {
-    const photoStream = fs.createReadStream(photoPath);
-    return ctx.replyWithPhoto(
-      { source: photoStream },
-      lessonSlideKeyboard(lesson,slideIdx)
-    );
-  } catch (err) {
-    console.log(err);
-    return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+  if (initial) {
+    try {
+      const photoStream = fs.createReadStream(photoPath);
+      return ctx.replyWithPhoto(
+        { source: photoStream },
+        lessonSlideKeyboard(lesson,slideIdx)
+      );
+    } catch (err) {
+      console.log(err);
+      return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+    }
+  }else {
+    try {
+      const photoStream = fs.createReadStream(photoPath);
+      return ctx.editMessageMedia({
+        type: 'photo',
+        media: { source: photoStream }
+      });
+    } catch (err) {
+      console.log(err);
+      return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+    }
   }
 }
 
@@ -182,7 +195,7 @@ bot.action(/^load-lesson-(\d+)$/, (ctx) => {
 bot.action(/^start-lesson-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
-  lessonSlidePage(ctx, lesson, 0)
+  lessonSlidePage(ctx, lesson, 0, true)
 });
 
 bot.action(/^finish-lesson-(\d+)$/, (ctx) => {
