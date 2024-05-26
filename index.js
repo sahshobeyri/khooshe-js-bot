@@ -187,7 +187,7 @@ bot.action(/^option-(\d+)$/, (ctx) => {
 });
 
 bot.action(/^load-lesson-(\d+)$/, (ctx) => {
-  ctx.deleteMessage()
+  // ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   lessonIntroPage(ctx, lesson)
 });
