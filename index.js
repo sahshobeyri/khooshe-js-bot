@@ -145,9 +145,9 @@ const lessonFinishPage = (ctx, lesson) => {
   }
 }
 
-const lessonQuizPage = (ctx, lesson) => {
+const lessonQuizPage = async (ctx, lesson) => {
   const q = lesson.quiz
-  ctx.replyWithQuiz(
+  await ctx.replyWithQuiz(
     q.question, // متن سوال
     q.options, // گزینه های سوال
     {
@@ -156,7 +156,7 @@ const lessonQuizPage = (ctx, lesson) => {
       explanation: q.explain // توضیحات پاسخ صحیح (دلخواه)
     },
   );
-  ctx.reply('بعد از این کجا میرید؟',lessonQuizKeyboard(lesson))
+  await ctx.reply('بعد از این کجا میرید؟',lessonQuizKeyboard(lesson))
 }
 
 const bot = new Telegraf(BOT_TOKEN)
