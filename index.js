@@ -105,7 +105,9 @@ const lessonSlidePage = (ctx, lesson, slideIdx, initial = false) => {
       return ctx.editMessageMedia({
         type: 'photo',
         media: { source: photoStream }
-      });
+        },
+        lessonSlideKeyboard(lesson,slideIdx)
+      );
     } catch (err) {
       console.log(err);
       return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
