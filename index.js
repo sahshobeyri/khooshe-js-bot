@@ -198,14 +198,14 @@ bot.command('image', (ctx) => {
 
 bot.command('db_debug', async (ctx) => {
   await ctx.reply('started altering db')
-  const insertQuery = 'INSERT INTO users (username) VALUES ($1) RETURNING *';
-  const values = ['sahshobeyri'];
+  const insertQuery = 'INSERT INTO users (chat_id,username,race) VALUES ($1,$2,$3)';
+  const values = [12123,'qoli','american'];
   dbClient.connect()
     .then(() => {
       console.log('Connected to PostgreSQL')
       dbClient.query(insertQuery, values)
         .then(res => {
-          console.log('User added successfully:', res.rows[0]);
+          console.log('User added successfully:');
         })
         .catch(err => {
           console.error('Error adding user:', err);
