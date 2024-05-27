@@ -15,10 +15,10 @@ const dbClient = new Client({
   port: 32330,
 });
 
-dbClient.connect()
-  .then(() => console.log('Connected to PostgreSQL'))
-  .catch(err => console.error('Connection error', err))
-  .finally(() => dbClient.end());
+// dbClient.connect()
+//   .then(() => console.log('Connected to PostgreSQL'))
+//   .catch(err => console.error('Connection error', err))
+//   .finally(() => dbClient.end());
 
 
 const {BOT_TOKEN} = process.env;
