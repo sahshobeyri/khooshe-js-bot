@@ -1,7 +1,8 @@
 const MongoClient = require('mongodb').MongoClient;
 
 // const url = 'mongodb://localhost:27017';
-const url = 'khooshe-bot-db.sahshobeyri.svc:27017';
+const url = 'mongodb://khooshe-bot-db.sahshobeyri.svc:27017';
+// const url = 'khooshe-bot-db.sahshobeyri.svc:27017';
 const dbName = 'KhoosheDB';
 
 let db;
