@@ -15,10 +15,10 @@ const dbClient = new Client({
   port: 32330,
 });
 
-// dbClient.connect()
-//   .then(() => console.log('Connected to PostgreSQL'))
-//   .catch(err => console.error('Connection error', err))
-//   .finally(() => dbClient.end());
+dbClient.connect()
+  .then(() => console.log('Connected to PostgreSQL'))
+  .catch(err => console.error('Connection error', err))
+  // .finally(() => dbClient.end());
 
 
 const {BOT_TOKEN} = process.env;
@@ -204,18 +204,14 @@ bot.command('db_debug', async (ctx) => {
   const username = randomPick(['qoli','hassan','mammad'])
   const race = randomPick(['asian','american','african'])
   const values = [chat_id,username,race];
-  dbClient.connect()
-    .then(() => {
-      console.log('Connected to PostgreSQL')
-      dbClient.query(insertQuery, values)
-        .then(res => {
-          console.log('User added successfully:');
-        })
-        .catch(err => {
-          console.error('Error adding user:', err);
-        })
-        .finally(() => dbClient.end());
-    }).catch(err => console.error('Connection error', err))
+
+  dbClient.query(insertQuery, values)
+    .then(res => {
+      console.log('User added successfully:', res.toString());
+    })
+    .catch(err => {
+      console.error('Error adding user:', err);
+    });
 });
 
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
@@ -265,5 +261,11 @@ bot.launch().then();
 
 
 // Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+process.once('SIGINT', () => {
+  dbClient.end()
+  bot.stop('SIGINT')
+});
+process.once('SIGTERM', () => {
+  dbClient.end()
+  bot.stop('SIGTERM')
+});
