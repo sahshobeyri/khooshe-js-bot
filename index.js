@@ -5,6 +5,22 @@ const {Telegraf, Markup} = require('telegraf')
 const fs = require('fs');
 const {message} = require('telegraf/filters')
 
+const { Client } = require('pg');
+
+const dbClient = new Client({
+  user: 'postgres',
+  host: '3f9ecbb8-c469-4765-88e5-fec38cc7de07.hsvc.ir',
+  database: 'postgres',
+  password: process.env.DB_PASS,
+  port: 32330,
+});
+
+dbClient.connect()
+  .then(() => console.log('Connected to PostgreSQL'))
+  .catch(err => console.error('Connection error', err))
+  .finally(() => dbClient.end());
+
+
 const {BOT_TOKEN} = process.env;
 if (!BOT_TOKEN) throw new Error('"BOT_TOKEN" env var is required!');
 
