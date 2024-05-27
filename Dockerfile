@@ -19,6 +19,5 @@ COPY . .
 EXPOSE 3000
 
 # Command to run the application
-CMD ["node", "index.js"]
-CMD ["node", "database.js"]
+CMD ["node", "database.js", "node", "index.js"]
 #CMD ["node", "index.js"]
