@@ -199,7 +199,11 @@ bot.command('image', (ctx) => {
 bot.command('db_debug', async (ctx) => {
   await ctx.reply('started altering db')
   const insertQuery = 'INSERT INTO users (chat_id,username,race) VALUES ($1,$2,$3)';
-  const values = [12123,'qoli','american'];
+  const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+  const chat_id = Math.round(Math.random() * 10000)
+  const username = randomPick(['qoli','hassan','mammad'])
+  const race = randomPick(['asian','american','african'])
+  const values = [chat_id,username,race];
   dbClient.connect()
     .then(() => {
       console.log('Connected to PostgreSQL')
