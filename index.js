@@ -200,14 +200,18 @@ bot.command('db_debug', async (ctx) => {
   await ctx.reply('started altering db')
   const insertQuery = 'INSERT INTO users (username) VALUES ($1) RETURNING *';
   const values = ['sahshobeyri'];
-  dbClient.query(insertQuery, values)
-    .then(res => {
-      console.log('User added successfully:', res.rows[0]);
-    })
-    .catch(err => {
-      console.error('Error adding user:', err);
-    })
-    .finally(() => dbClient.end());
+  dbClient.connect()
+    .then(() => {
+      console.log('Connected to PostgreSQL')
+      dbClient.query(insertQuery, values)
+        .then(res => {
+          console.log('User added successfully:', res.rows[0]);
+        })
+        .catch(err => {
+          console.error('Error adding user:', err);
+        })
+        .finally(() => dbClient.end());
+    }).catch(err => console.error('Connection error', err))
 });
 
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
