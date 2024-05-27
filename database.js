@@ -27,7 +27,7 @@ require('dotenv')
 const {DB_PASS} = process.env;
 
 // Replace the uri string with your connection string.
-const url = "khooshe-bot-db.sahshobeyri.svc:27017"
+const url = "khooshe-bot-db.sahshobeyri.svc"
 const uri = `mongodb+srv://root:${DB_PASS}@${url}?retryWrites=true&writeConcern=majority`;
 
 const client = new MongoClient(uri);
