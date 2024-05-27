@@ -267,22 +267,3 @@ bot.launch().then();
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
-
-
-// bot.on(message('sticker'), (ctx) => ctx.reply('🖕🏻'))
-// bot.on(message('text'),  (ctx) => {
-//   if (ctx.message.text !== "start") {
-//     ctx.reply('🤌🏻')
-//   }
-// });
-// bot.hears('hi', (ctx) => ctx.reply('Hey there'))
-// bot.launch().then()
-
-//ctx.reply(`Hello ${ctx.update.message.from.first_name}!`)
-// just to deploy 2
-
-// ctx.reply("OK")
-// ctx.replyWithPhoto("https://raw.githubusercontent.com/sahshobeyri/khooshe-js-bot/master/img/genie5.png", {
-//   caption: "غول چراغ جادوی تستی",
-//   parse_mode: "Markdown",
-// })
