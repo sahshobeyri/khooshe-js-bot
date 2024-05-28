@@ -168,7 +168,6 @@ const lessonQuizPage = async (ctx, lesson) => {
 
 const bot = new Telegraf(BOT_TOKEN)
 bot.start((ctx) => {
-  db_init_user(100,199,'sahshobeyri','sah','shobeyri')
   ctx.reply(WELCOME_MSG)
 })
 bot.help((ctx) => ctx.reply(HELP_MSG))
@@ -205,7 +204,14 @@ bot.command('image', (ctx) => {
     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
   }
 });
-
+bot.command('/register', (ctx) =>{
+  const userId = ctx.from.id;
+  const chatId = ctx.chat.id;
+  const username = ctx.from.username;
+  const firstName = ctx.from.first_name;
+  const lastName = ctx.from.last_name;
+  db_init_user(userId,chatId,username,firstName,lastName)
+});
 bot.command('db_debug', async (ctx) => {
   await ctx.reply('nothing for now')
   // await ctx.reply('started altering db')
