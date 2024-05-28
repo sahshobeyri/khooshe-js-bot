@@ -188,51 +188,16 @@ const lessonQuizPage = async (ctx, lesson) => {
 }
 
 const bot = new Telegraf(BOT_TOKEN)
+
+
 bot.start((ctx) => {
   ctx.reply(WELCOME_MSG)
 })
 bot.help((ctx) => ctx.reply(HELP_MSG))
 bot.command('select_lesson', selectLessonsPage)
-bot.command('select', (ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
-  reply_markup: {
-    inline_keyboard: [
-      [
-        {text: 'گزینه 1', callback_data: 'option-1'},
-        {text: 'گزینه 2', callback_data: 'option-2'}
-      ]
-    ]
-  }
-}));
-bot.command('quiz', (ctx) => {
-  ctx.replyWithQuiz(
-    'Do you Like Me? Do you do you?', // متن سوال
-    ['YES', 'NO'], // گزینه های سوال
-    {
-      correct_option_id: 0, // گزینه صحیح (شروع از 0)
-      is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
-      explanation: 'I Like You too' // توضیحات پاسخ صحیح (دلخواه)
-    }
-  );
-});
 bot.command('debug', (ctx) => console.log(ctx))
-bot.command('image', (ctx) => {
-  const photoPath = 'img/genie5.PNG';
-  try {
-    const photoStream = fs.createReadStream(photoPath);
-    return ctx.replyWithPhoto({ source: photoStream });
-  } catch (err) {
-    console.log(err);
-    return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
-  }
-});
 bot.command('register', async (ctx) =>{
   await register_user_if_not_exist(ctx)
-  // const userId = ctx.from.id;
-  // const chatId = ctx.chat.id;
-  // const username = ctx.from.username;
-  // const firstName = ctx.from.first_name;
-  // const lastName = ctx.from.last_name;
-  // db_init_user(userId,chatId,username,firstName,lastName)
 });
 bot.command('db_debug', async (ctx) => {
   await ctx.reply('nothing for now')
@@ -253,8 +218,6 @@ bot.command('db_debug', async (ctx) => {
   //   });
 });
 
-// bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
-bot.action("delete", ctx => ctx.deleteMessage());
 
 bot.action(/^option-(\d+)$/, (ctx) => {
   ctx.deleteMessage()
@@ -308,3 +271,38 @@ process.once('SIGTERM', () => {
   dbClient.end()
   bot.stop('SIGTERM')
 });
+
+
+// bot.command('select', (ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
+//   reply_markup: {
+//     inline_keyboard: [
+//       [
+//         {text: 'گزینه 1', callback_data: 'option-1'},
+//         {text: 'گزینه 2', callback_data: 'option-2'}
+//       ]
+//     ]
+//   }
+// }));
+// bot.command('quiz', (ctx) => {
+//   ctx.replyWithQuiz(
+//     'Do you Like Me? Do you do you?', // متن سوال
+//     ['YES', 'NO'], // گزینه های سوال
+//     {
+//       correct_option_id: 0, // گزینه صحیح (شروع از 0)
+//       is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
+//       explanation: 'I Like You too' // توضیحات پاسخ صحیح (دلخواه)
+//     }
+//   );
+// });
+// bot.command('image', (ctx) => {
+//   const photoPath = 'img/genie5.PNG';
+//   try {
+//     const photoStream = fs.createReadStream(photoPath);
+//     return ctx.replyWithPhoto({ source: photoStream });
+//   } catch (err) {
+//     console.log(err);
+//     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
+//   }
+// });
+// bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
+// bot.action("delete", ctx => ctx.deleteMessage());
