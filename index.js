@@ -204,7 +204,7 @@ bot.command('image', (ctx) => {
     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
   }
 });
-bot.command('/register', (ctx) =>{
+bot.command('register', (ctx) =>{
   const userId = ctx.from.id;
   const chatId = ctx.chat.id;
   const username = ctx.from.username;
