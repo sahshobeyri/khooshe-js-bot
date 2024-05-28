@@ -47,6 +47,14 @@ const db_init_user = (user_id, chat_id, username, first_name, last_name) => {
   dbClient.query(insertQuery, values).then(console.log).catch(console.log)
 }
 
+const db_update_last_seen = (user_id) => {
+  const update_query = `UPDATE users
+  SET last_seen = CURRENT_TIMESTAMP
+  WHERE user_id = $1;`
+  const values = [user_id]
+  dbClient.query(update_query,values).then(console.log).catch(console.log)
+}
+
 const check_if_user_exists = async (user_id) => {
   try {
     const query = 'SELECT * FROM users WHERE user_id = $1';
@@ -107,11 +115,13 @@ const lessonIntroKeyboard = (l) =>
 
 const selectLessonsPage = async (ctx) => {
   await register_user_if_not_exist(ctx)
+  db_update_last_seen()
   ctx.reply(SELECT_LESSON_MSG,lessonSelectionKeyboard);
 }
 
 const lessonIntroPage = async (ctx, lesson) => {
   await register_user_if_not_exist(ctx)
+  db_update_last_seen()
   const photoPath = `img/lessons/l${lesson.id}/intro.PNG`;
   try {
     const photoStream = fs.createReadStream(photoPath);
@@ -130,6 +140,7 @@ const lessonIntroPage = async (ctx, lesson) => {
 
 const lessonSlidePage = async (ctx, lesson, slideIdx, initial = false) => {
   await register_user_if_not_exist(ctx)
+  db_update_last_seen()
   const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
   if (initial) {
     try {
@@ -160,6 +171,7 @@ const lessonSlidePage = async (ctx, lesson, slideIdx, initial = false) => {
 
 const lessonFinishPage = async (ctx, lesson) => {
   await register_user_if_not_exist(ctx)
+  db_update_last_seen()
   const photoPath = `img/lessons/lessonFinished.PNG`;
   try {
     const photoStream = fs.createReadStream(photoPath);
@@ -175,6 +187,7 @@ const lessonFinishPage = async (ctx, lesson) => {
 
 const lessonQuizPage = async (ctx, lesson) => {
   await register_user_if_not_exist(ctx)
+  db_update_last_seen()
   const q = lesson.quiz
   await ctx.replyWithQuiz(
     q.question, // متن سوال
@@ -193,45 +206,53 @@ const bot = new Telegraf(BOT_TOKEN)
 
 bot.start(async (ctx) => {
   await register_user_if_not_exist(ctx)
+  db_update_last_seen()
   ctx.reply(WELCOME_MSG)
 });
 bot.help(async (ctx) => {
   await register_user_if_not_exist(ctx)
+  db_update_last_seen()
   ctx.reply(HELP_MSG)
 });
 bot.command('select_lesson', selectLessonsPage)
 
 
 bot.action(/^load-lesson-(\d+)$/, async (ctx) => {
+  db_update_last_seen()
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonIntroPage(ctx, lesson)
 });
 
 bot.action(/^start-lesson-(\d+)$/, async (ctx) => {
+  db_update_last_seen()
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonSlidePage(ctx, lesson, 0, true)
 });
 
 bot.action(/^finish-lesson-(\d+)$/, async (ctx) => {
+  db_update_last_seen()
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonFinishPage(ctx, lesson)
 });
 
 bot.action(/^quiz-lesson-(\d+)$/, async (ctx) => {
+  db_update_last_seen()
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonQuizPage(ctx, lesson)
 });
 
 bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, async (ctx) => {
+  db_update_last_seen()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonSlidePage(ctx, lesson, +(ctx.match[2]))
 });
 
 bot.action("load-lessons", async (ctx) => {
+  db_update_last_seen()
   ctx.deleteMessage()
   await selectLessonsPage(ctx)
 });
