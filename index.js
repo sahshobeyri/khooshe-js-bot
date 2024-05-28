@@ -211,19 +211,7 @@ const lessonQuizPage = async (ctx, lesson) => {
   await ctx.reply('بعد از این کجا میرید؟',lessonQuizKeyboard(lesson))
 }
 
-const bot = new Telegraf(BOT_TOKEN)
-
-
-bot.start(async (ctx) => {
-  await on_any_interaction(ctx)
-  ctx.reply(WELCOME_MSG)
-});
-bot.help(async (ctx) => {
-  await on_any_interaction(ctx)
-  ctx.reply(HELP_MSG)
-});
-bot.command('select_lesson', selectLessonsPage)
-bot.command('stats', async (ctx) => {
+const statsPage = async (ctx) => {
   await on_any_interaction(ctx)
   const user_id = ctx.from.id
   dbClient.query('SELECT EXTRACT(EPOCH FROM (last_seen - first_seen)) AS time_diff FROM users WHERE user_id = $1',
@@ -236,7 +224,21 @@ bot.command('stats', async (ctx) => {
       const timeDiffInHours = (timeDiffInSeconds/3600).toFixed(1)
       ctx.reply(`⏱ You have been here from ${timeDiffInHours} hours ago.`)
     });
+}
+
+const bot = new Telegraf(BOT_TOKEN)
+
+
+bot.start(async (ctx) => {
+  await on_any_interaction(ctx)
+  ctx.reply(WELCOME_MSG)
 });
+bot.help(async (ctx) => {
+  await on_any_interaction(ctx)
+  ctx.reply(HELP_MSG)
+});
+bot.command('select_lesson', selectLessonsPage)
+bot.command('stats', statsPage)
 
 
 bot.action(/^load-lesson-(\d+)$/, async (ctx) => {
