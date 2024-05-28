@@ -35,7 +35,8 @@ function getLesson(id) {
 function generateLessonsList() {
   let result = ""
   for (const idx in LESSONS) {
-    result += `${+idx + 1}. ${LESSONS[idx].title}` + "\n"
+    result += `${+idx + 1}. ${LESSONS[idx].title}:` + "\n"
+    result += `${LESSONS[idx].description}` + "\n\n"
   }
   return result
 }
