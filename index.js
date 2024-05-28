@@ -226,17 +226,21 @@ const statsPage = async (ctx) => {
     });
 }
 
+const helpPage = async (ctx) => {
+  await on_any_interaction(ctx)
+  ctx.reply(HELP_MSG)
+}
+
+const startPage = async (ctx) => {
+  await on_any_interaction(ctx)
+  ctx.reply(WELCOME_MSG)
+}
+
 const bot = new Telegraf(BOT_TOKEN)
 
 
-bot.start(async (ctx) => {
-  await on_any_interaction(ctx)
-  ctx.reply(WELCOME_MSG)
-});
-bot.help(async (ctx) => {
-  await on_any_interaction(ctx)
-  ctx.reply(HELP_MSG)
-});
+bot.start(startPage);
+bot.help(helpPage);
 bot.command('select_lesson', selectLessonsPage)
 bot.command('stats', statsPage)
 
