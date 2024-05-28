@@ -1,5 +1,6 @@
 console.log("HELLLLLO")
 require('dotenv')
+const BOT_ADDRESS = "https://t.me/khooshe_dev_bot"
 const LESSONS = require('./lessons_data.js')
 const {Telegraf, Markup} = require('telegraf')
 const fs = require('fs');
@@ -35,7 +36,8 @@ function getLesson(id) {
 function generateLessonsList() {
   let result = ""
   for (const idx in LESSONS) {
-    result += `${+idx + 1}. ${LESSONS[idx].title}:` + "\n"
+    const link = `[${LESSONS[idx].title}](${BOT_ADDRESS}?start=lesson-${idx})`;
+    result += `${+idx + 1}. ${link}:` + "\n"
     result += `${LESSONS[idx].description}` + "\n\n"
   }
   return result
