@@ -196,10 +196,14 @@ const lessonQuizPage = async (ctx, lesson) => {
 const bot = new Telegraf(BOT_TOKEN)
 
 
-bot.start((ctx) => {
+bot.start(async (ctx) => {
+  await register_user_if_not_exist(ctx)
   ctx.reply(WELCOME_MSG)
-})
-bot.help((ctx) => ctx.reply(HELP_MSG))
+});
+bot.help(async (ctx) => {
+  await register_user_if_not_exist(ctx)
+  ctx.reply(HELP_MSG)
+});
 bot.command('select_lesson', selectLessonsPage)
 bot.command('debug', (ctx) => console.log(ctx))
 bot.command('register', async (ctx) =>{
