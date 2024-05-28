@@ -233,7 +233,8 @@ bot.command('stats', async (ctx) => {
         return;
       }
       const timeDiffInSeconds = res.rows[0].time_diff;
-      ctx.reply(`You have been here from ${timeDiffInSeconds} seconds ago.`)
+      const timeDiffInHours = (timeDiffInSeconds/3600).toFixed(1)
+      ctx.reply(`⏱ You have been here from ${timeDiffInHours} hours ago.`)
     });
 });
 
