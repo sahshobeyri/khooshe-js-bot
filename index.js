@@ -40,6 +40,13 @@ function generateLessonsList() {
   return result
 }
 
+const db_init_user = (user_id, chat_id, username, first_name, last_name) => {
+  const insertQuery =
+    'INSERT INTO users (user_id,chat_id,username,first_name,last_name) VALUES ($1,$2,$3,$4,$5)';
+  const values = [user_id, chat_id, username, first_name, last_name];
+  dbClient.query(insertQuery, values).then(console.log).catch(console.log)
+}
+
 const keyboard = Markup.inlineKeyboard([
   Markup.button.url("❤️", "http://telegraf.js.org"),
   Markup.button.callback("Delete", "delete"),
@@ -160,7 +167,10 @@ const lessonQuizPage = async (ctx, lesson) => {
 }
 
 const bot = new Telegraf(BOT_TOKEN)
-bot.start((ctx) => ctx.reply(WELCOME_MSG))
+bot.start((ctx) => {
+  db_init_user(100,199,'sahshobeyri','sah','shobeyri')
+  ctx.reply(WELCOME_MSG)
+})
 bot.help((ctx) => ctx.reply(HELP_MSG))
 bot.command('select_lesson', selectLessonsPage)
 bot.command('select', (ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
@@ -197,21 +207,22 @@ bot.command('image', (ctx) => {
 });
 
 bot.command('db_debug', async (ctx) => {
-  await ctx.reply('started altering db')
-  const insertQuery = 'INSERT INTO users (chat_id,username,race) VALUES ($1,$2,$3)';
-  const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)]
-  const chat_id = Math.round(Math.random() * 10000)
-  const username = randomPick(['qoli','hassan','mammad'])
-  const race = randomPick(['asian','american','african'])
-  const values = [chat_id,username,race];
-
-  dbClient.query(insertQuery, values)
-    .then(res => {
-      console.log('User added successfully:', res.toString());
-    })
-    .catch(err => {
-      console.error('Error adding user:', err);
-    });
+  await ctx.reply('nothing for now')
+  // await ctx.reply('started altering db')
+  // const insertQuery = 'INSERT INTO users (chat_id,username,race) VALUES ($1,$2,$3)';
+  // const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+  // const chat_id = Math.round(Math.random() * 10000)
+  // const username = randomPick(['qoli','hassan','mammad'])
+  // const race = randomPick(['asian','american','african'])
+  // const values = [chat_id,username,race];
+  //
+  // dbClient.query(insertQuery, values)
+  //   .then(res => {
+  //     console.log('User added successfully:', res.toString());
+  //   })
+  //   .catch(err => {
+  //     console.error('Error adding user:', err);
+  //   });
 });
 
 bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
