@@ -110,10 +110,13 @@ const lessonIntroKeyboard = (l) =>
     Markup.button.callback("بازگشت", "load-lessons"),
   ]);
 
-const selectLessonsPage = (ctx) =>
+const selectLessonsPage = async (ctx) => {
+  await register_user_if_not_exist(ctx)
   ctx.reply(SELECT_LESSON_MSG,lessonSelectionKeyboard);
+}
 
-const lessonIntroPage = (ctx, lesson) => {
+const lessonIntroPage = async (ctx, lesson) => {
+  await register_user_if_not_exist(ctx)
   const photoPath = `img/lessons/l${lesson.id}/intro.PNG`;
   try {
     const photoStream = fs.createReadStream(photoPath);
@@ -130,7 +133,8 @@ const lessonIntroPage = (ctx, lesson) => {
   }
 }
 
-const lessonSlidePage = (ctx, lesson, slideIdx, initial = false) => {
+const lessonSlidePage = async (ctx, lesson, slideIdx, initial = false) => {
+  await register_user_if_not_exist(ctx)
   const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
   if (initial) {
     try {
@@ -159,7 +163,8 @@ const lessonSlidePage = (ctx, lesson, slideIdx, initial = false) => {
   }
 }
 
-const lessonFinishPage = (ctx, lesson) => {
+const lessonFinishPage = async (ctx, lesson) => {
+  await register_user_if_not_exist(ctx)
   const photoPath = `img/lessons/lessonFinished.PNG`;
   try {
     const photoStream = fs.createReadStream(photoPath);
@@ -174,6 +179,7 @@ const lessonFinishPage = (ctx, lesson) => {
 }
 
 const lessonQuizPage = async (ctx, lesson) => {
+  await register_user_if_not_exist(ctx)
   const q = lesson.quiz
   await ctx.replyWithQuiz(
     q.question, // متن سوال
@@ -219,44 +225,39 @@ bot.command('db_debug', async (ctx) => {
 });
 
 
-bot.action(/^option-(\d+)$/, (ctx) => {
-  ctx.deleteMessage()
-  ctx.reply(`شما گزینه ${ctx.match[1]} را انتخاب کردید`, keyboard)
-});
-
-bot.action(/^load-lesson-(\d+)$/, (ctx) => {
+bot.action(/^load-lesson-(\d+)$/, async (ctx) => {
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
-  lessonIntroPage(ctx, lesson)
+  await lessonIntroPage(ctx, lesson)
 });
 
-bot.action(/^start-lesson-(\d+)$/, (ctx) => {
+bot.action(/^start-lesson-(\d+)$/, async (ctx) => {
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
-  lessonSlidePage(ctx, lesson, 0, true)
+  await lessonSlidePage(ctx, lesson, 0, true)
 });
 
-bot.action(/^finish-lesson-(\d+)$/, (ctx) => {
+bot.action(/^finish-lesson-(\d+)$/, async (ctx) => {
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
-  lessonFinishPage(ctx, lesson)
+  await lessonFinishPage(ctx, lesson)
 });
 
-bot.action(/^quiz-lesson-(\d+)$/, (ctx) => {
+bot.action(/^quiz-lesson-(\d+)$/, async (ctx) => {
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
-  lessonQuizPage(ctx, lesson)
+  await lessonQuizPage(ctx, lesson)
 });
 
-bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, (ctx) => {
+bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, async (ctx) => {
   // ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
-  lessonSlidePage(ctx, lesson, +(ctx.match[2]))
+  await lessonSlidePage(ctx, lesson, +(ctx.match[2]))
 });
 
-bot.action("load-lessons", (ctx) => {
+bot.action("load-lessons", async (ctx) => {
   ctx.deleteMessage()
-  selectLessonsPage(ctx)
+  await selectLessonsPage(ctx)
 });
 
 bot.launch().then();
@@ -306,3 +307,8 @@ process.once('SIGTERM', () => {
 // });
 // bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
 // bot.action("delete", ctx => ctx.deleteMessage());
+
+// bot.action(/^option-(\d+)$/, (ctx) => {
+//   ctx.deleteMessage()
+//   ctx.reply(`شما گزینه ${ctx.match[1]} را انتخاب کردید`, keyboard)
+// });
