@@ -223,6 +223,19 @@ bot.help(async (ctx) => {
   ctx.reply(HELP_MSG)
 });
 bot.command('select_lesson', selectLessonsPage)
+bot.command('stats', async (ctx) => {
+  await on_any_interaction(ctx)
+  const user_id = ctx.from.id
+  dbClient.query('SELECT EXTRACT(EPOCH FROM (last_seen - first_seen)) AS time_diff FROM users WHERE user_id = $1',
+    [user_id], (err, res) => {
+      if (err) {
+        console.error('خطا در اجرای کوئری', err);
+        return;
+      }
+      const timeDiffInSeconds = res.rows[0].time_diff;
+      ctx.reply(`You have been here from ${timeDiffInSeconds} seconds ago.`)
+    });
+});
 
 
 bot.action(/^load-lesson-(\d+)$/, async (ctx) => {
