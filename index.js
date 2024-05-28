@@ -120,15 +120,11 @@ const lessonIntroKeyboard = (l) =>
 
 const selectLessonsPage = async (ctx) => {
   await on_any_interaction(ctx)
-  // await register_user_if_not_exist(ctx)
-  // db_update_last_seen()
   ctx.reply(SELECT_LESSON_MSG,lessonSelectionKeyboard);
 }
 
 const lessonIntroPage = async (ctx, lesson) => {
   await on_any_interaction(ctx)
-  // await register_user_if_not_exist(ctx)
-  // db_update_last_seen()
   const photoPath = `img/lessons/l${lesson.id}/intro.PNG`;
   try {
     const photoStream = fs.createReadStream(photoPath);
@@ -147,8 +143,6 @@ const lessonIntroPage = async (ctx, lesson) => {
 
 const lessonSlidePage = async (ctx, lesson, slideIdx, initial = false) => {
   await on_any_interaction(ctx)
-  // await register_user_if_not_exist(ctx)
-  // db_update_last_seen()
   const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
   if (initial) {
     try {
@@ -179,8 +173,6 @@ const lessonSlidePage = async (ctx, lesson, slideIdx, initial = false) => {
 
 const lessonFinishPage = async (ctx, lesson) => {
   await on_any_interaction(ctx)
-  // await register_user_if_not_exist(ctx)
-  // db_update_last_seen()
   const photoPath = `img/lessons/lessonFinished.PNG`;
   try {
     const photoStream = fs.createReadStream(photoPath);
@@ -196,8 +188,6 @@ const lessonFinishPage = async (ctx, lesson) => {
 
 const lessonQuizPage = async (ctx, lesson) => {
   await on_any_interaction(ctx)
-  // await register_user_if_not_exist(ctx)
-  // db_update_last_seen()
   const q = lesson.quiz
   await ctx.replyWithQuiz(
     q.question, // متن سوال
