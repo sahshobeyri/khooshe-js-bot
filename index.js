@@ -231,7 +231,7 @@ bot.command('db_debug', async (ctx) => {
   //   });
 });
 
-bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
+// bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
 bot.action("delete", ctx => ctx.deleteMessage());
 
 bot.action(/^option-(\d+)$/, (ctx) => {
