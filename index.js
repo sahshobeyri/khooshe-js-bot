@@ -68,11 +68,6 @@ const register_user_if_not_exist = async (ctx) => {
     ctx.from.last_name);
 }
 
-const keyboard = Markup.inlineKeyboard([
-  Markup.button.url("❤️", "http://telegraf.js.org"),
-  Markup.button.callback("Delete", "delete"),
-]);
-
 const lessonSelectionKeyboard =
   Markup.inlineKeyboard(LESSONS.map(l=>
     Markup.button.callback(`${l.title}`, `load-lesson-${l.id}`))
@@ -205,28 +200,6 @@ bot.help(async (ctx) => {
   ctx.reply(HELP_MSG)
 });
 bot.command('select_lesson', selectLessonsPage)
-bot.command('debug', (ctx) => console.log(ctx))
-bot.command('register', async (ctx) =>{
-  await register_user_if_not_exist(ctx)
-});
-bot.command('db_debug', async (ctx) => {
-  await ctx.reply('nothing for now')
-  // await ctx.reply('started altering db')
-  // const insertQuery = 'INSERT INTO users (chat_id,username,race) VALUES ($1,$2,$3)';
-  // const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)]
-  // const chat_id = Math.round(Math.random() * 10000)
-  // const username = randomPick(['qoli','hassan','mammad'])
-  // const race = randomPick(['asian','american','african'])
-  // const values = [chat_id,username,race];
-  //
-  // dbClient.query(insertQuery, values)
-  //   .then(res => {
-  //     console.log('User added successfully:', res.toString());
-  //   })
-  //   .catch(err => {
-  //     console.error('Error adding user:', err);
-  //   });
-});
 
 
 bot.action(/^load-lesson-(\d+)$/, async (ctx) => {
@@ -254,7 +227,6 @@ bot.action(/^quiz-lesson-(\d+)$/, async (ctx) => {
 });
 
 bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, async (ctx) => {
-  // ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonSlidePage(ctx, lesson, +(ctx.match[2]))
 });
@@ -276,43 +248,3 @@ process.once('SIGTERM', () => {
   dbClient.end()
   bot.stop('SIGTERM')
 });
-
-
-// bot.command('select', (ctx) => ctx.reply('سلام! لطفا یکی از گزینه‌ها را انتخاب کنید.', {
-//   reply_markup: {
-//     inline_keyboard: [
-//       [
-//         {text: 'گزینه 1', callback_data: 'option-1'},
-//         {text: 'گزینه 2', callback_data: 'option-2'}
-//       ]
-//     ]
-//   }
-// }));
-// bot.command('quiz', (ctx) => {
-//   ctx.replyWithQuiz(
-//     'Do you Like Me? Do you do you?', // متن سوال
-//     ['YES', 'NO'], // گزینه های سوال
-//     {
-//       correct_option_id: 0, // گزینه صحیح (شروع از 0)
-//       is_anonymous: false, // اگر می‌خواهید نتیجه کوئیز ناشناس باشد، این گزینه را برابر true قرار دهید
-//       explanation: 'I Like You too' // توضیحات پاسخ صحیح (دلخواه)
-//     }
-//   );
-// });
-// bot.command('image', (ctx) => {
-//   const photoPath = 'img/genie5.PNG';
-//   try {
-//     const photoStream = fs.createReadStream(photoPath);
-//     return ctx.replyWithPhoto({ source: photoStream });
-//   } catch (err) {
-//     console.log(err);
-//     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
-//   }
-// });
-// bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
-// bot.action("delete", ctx => ctx.deleteMessage());
-
-// bot.action(/^option-(\d+)$/, (ctx) => {
-//   ctx.deleteMessage()
-//   ctx.reply(`شما گزینه ${ctx.match[1]} را انتخاب کردید`, keyboard)
-// });
