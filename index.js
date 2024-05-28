@@ -47,6 +47,27 @@ const db_init_user = (user_id, chat_id, username, first_name, last_name) => {
   dbClient.query(insertQuery, values).then(console.log).catch(console.log)
 }
 
+const check_if_user_exists = async (user_id) => {
+  try {
+    const query = 'SELECT * FROM users WHERE user_id = $1';
+    const result = await dbClient.query(query, [user_id]);
+    return result.rows.length > 0;
+  } catch (err) {
+    console.error('Error during database query:', err);
+    return false;
+  }
+}
+
+const register_user_if_not_exist = async (ctx) => {
+  if (await check_if_user_exists(ctx.from.id)) return
+  db_init_user(
+    ctx.from.id,
+    ctx.chat.id,
+    ctx.from.username,
+    ctx.from.first_name,
+    ctx.from.last_name);
+}
+
 const keyboard = Markup.inlineKeyboard([
   Markup.button.url("❤️", "http://telegraf.js.org"),
   Markup.button.callback("Delete", "delete"),
@@ -204,13 +225,14 @@ bot.command('image', (ctx) => {
     return ctx.reply('مشکلی در ارسال تصویر به وجود آمده است.');
   }
 });
-bot.command('register', (ctx) =>{
-  const userId = ctx.from.id;
-  const chatId = ctx.chat.id;
-  const username = ctx.from.username;
-  const firstName = ctx.from.first_name;
-  const lastName = ctx.from.last_name;
-  db_init_user(userId,chatId,username,firstName,lastName)
+bot.command('register', async (ctx) =>{
+  await register_user_if_not_exist(ctx)
+  // const userId = ctx.from.id;
+  // const chatId = ctx.chat.id;
+  // const username = ctx.from.username;
+  // const firstName = ctx.from.first_name;
+  // const lastName = ctx.from.last_name;
+  // db_init_user(userId,chatId,username,firstName,lastName)
 });
 bot.command('db_debug', async (ctx) => {
   await ctx.reply('nothing for now')
