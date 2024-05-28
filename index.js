@@ -42,7 +42,7 @@ function generateLessonsList() {
 
 const db_init_user = (user_id, chat_id, username, first_name, last_name) => {
   const insertQuery =
-    'INSERT INTO users (user_id,chat_id,username,first_name,last_name) VALUES ($1,$2,$3,$4,$5)';
+    'INSERT INTO users (user_id,chat_id,username,first_name,last_name,first_seen,last_seen) VALUES ($1,$2,$3,$4,$5,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)';
   const values = [user_id, chat_id, username, first_name, last_name];
   dbClient.query(insertQuery, values).then(console.log).catch(console.log)
 }
