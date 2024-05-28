@@ -216,14 +216,10 @@ const bot = new Telegraf(BOT_TOKEN)
 
 bot.start(async (ctx) => {
   await on_any_interaction(ctx)
-  // await register_user_if_not_exist(ctx)
-  // db_update_last_seen()
   ctx.reply(WELCOME_MSG)
 });
 bot.help(async (ctx) => {
   await on_any_interaction(ctx)
-  // await register_user_if_not_exist(ctx)
-  // db_update_last_seen()
   ctx.reply(HELP_MSG)
 });
 bot.command('select_lesson', selectLessonsPage)
@@ -231,7 +227,6 @@ bot.command('select_lesson', selectLessonsPage)
 
 bot.action(/^load-lesson-(\d+)$/, async (ctx) => {
   await on_any_interaction(ctx)
-  // db_update_last_seen()
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonIntroPage(ctx, lesson)
@@ -239,7 +234,6 @@ bot.action(/^load-lesson-(\d+)$/, async (ctx) => {
 
 bot.action(/^start-lesson-(\d+)$/, async (ctx) => {
   await on_any_interaction(ctx)
-  // db_update_last_seen()
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonSlidePage(ctx, lesson, 0, true)
@@ -247,7 +241,6 @@ bot.action(/^start-lesson-(\d+)$/, async (ctx) => {
 
 bot.action(/^finish-lesson-(\d+)$/, async (ctx) => {
   await on_any_interaction(ctx)
-  // db_update_last_seen()
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonFinishPage(ctx, lesson)
@@ -255,7 +248,6 @@ bot.action(/^finish-lesson-(\d+)$/, async (ctx) => {
 
 bot.action(/^quiz-lesson-(\d+)$/, async (ctx) => {
   await on_any_interaction(ctx)
-  // db_update_last_seen()
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonQuizPage(ctx, lesson)
@@ -263,14 +255,12 @@ bot.action(/^quiz-lesson-(\d+)$/, async (ctx) => {
 
 bot.action(/^load-lesson-(\d+)-slide-(\d+)$/, async (ctx) => {
   await on_any_interaction(ctx)
-  // db_update_last_seen()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonSlidePage(ctx, lesson, +(ctx.match[2]))
 });
 
 bot.action("load-lessons", async (ctx) => {
   await on_any_interaction(ctx)
-  // db_update_last_seen()
   ctx.deleteMessage()
   await selectLessonsPage(ctx)
 });
