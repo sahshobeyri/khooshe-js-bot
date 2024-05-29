@@ -124,7 +124,7 @@ const lessonIntroKeyboard = (l) =>
 const selectLessonsPage = async (ctx) => {
   await on_any_interaction(ctx)
   const replyText = SELECT_LESSON_MSG + "\n\n" + generateLessonsList()
-  ctx.reply(replyText,lessonSelectionKeyboard);
+  ctx.replyWithMarkdown(replyText,lessonSelectionKeyboard);
 }
 
 const lessonIntroPage = async (ctx, lesson) => {
