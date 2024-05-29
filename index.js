@@ -36,7 +36,7 @@ function getLesson(id) {
 function generateLessonsList() {
   let result = ""
   for (const idx in LESSONS) {
-    const link = `[${LESSONS[idx].title}](${BOT_ADDRESS}?start=lesson-${idx})`;
+    const link = `[${LESSONS[idx].title}](${BOT_ADDRESS}?start=/lesson-${idx})`;
     result += `${+idx + 1}. ${link}:` + "\n"
     result += `${LESSONS[idx].description}` + "\n\n"
   }
