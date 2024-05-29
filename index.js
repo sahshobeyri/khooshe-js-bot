@@ -39,8 +39,8 @@ function generateLessonsList() {
     // const link = `[${LESSONS[idx].title}](${BOT_ADDRESS}?start=/lesson-${idx})`;
     // result += `${+idx + 1}. ${link}:` + "\n"
     result += `*${+l.id + 1}. ${l.title}*:`+ "\n"
-    result += `${l.description}` + " "
-    result += "( شروع درس:" + `/LessonCode${l.id} )` + "\n\n"
+    result += `${l.description}` + "\n"
+    result += "(شروع درس:" + `/LessonCode${l.id})` + "\n\n"
   }
   return result
 }
