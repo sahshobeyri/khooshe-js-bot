@@ -86,16 +86,21 @@ const on_any_interaction = async (ctx) => {
   db_update_last_seen(ctx.from.id)
 }
 
-const lessonSelectionKeyboardOld =
+const lessonSelectionKeyboardV1 =
   Markup.inlineKeyboard(LESSONS.map(l=>
     Markup.button.callback(`${l.title}`, `load-lesson-${l.id}`))
   );
 
-const lessonSelectionKeyboard =
+const lessonSelectionKeyboardV2 =
   Markup.inlineKeyboard(LESSONS.map(l=>
     Markup.button.callback(`${l.title}`, `load-lesson-${l.id}`))
     .map(i => [i])
   );
+
+const lessonSelectionKeyboard =
+  Markup.inlineKeyboard([
+    Markup.button.callback("بستن", "close-page"),
+  ]);
 
 const lessonSlideKeyboard = (l,slideIdx) => {
   let btn_arr = []
@@ -292,6 +297,11 @@ bot.action("load-lessons", async (ctx) => {
   ctx.deleteMessage()
   await selectLessonsPage(ctx)
 });
+
+bot.action("close-page", async (ctx) => {
+  await on_any_interaction(ctx)
+  ctx.deleteMessage()
+})
 
 bot.launch().then();
 
