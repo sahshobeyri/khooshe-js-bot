@@ -40,7 +40,7 @@ function generateLessonsList() {
     // result += `${+idx + 1}. ${link}:` + "\n"
     result += `${+l.id + 1}. ${l.title}:` + "\n"
     result += `${l.description}` + "\n"
-    result += "برای شروع اینجا کلیک کنید:" + `/load-lesson-${l.id}` + "\n\n"
+    result += "برای شروع اینجا کلیک کنید:" + `/load_lesson_${l.id}` + "\n\n"
   }
   return result
 }
@@ -240,7 +240,7 @@ bot.help(helpPage);
 bot.command('select_lesson', selectLessonsPage)
 bot.command('stats', statsPage)
 
-bot.hears(/\/load-lesson-(\d+)/, async (ctx) => {
+bot.hears(/\/load_lesson_(\d+)/, async (ctx) => {
   await on_any_interaction(ctx)
   ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
