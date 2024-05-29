@@ -35,10 +35,12 @@ function getLesson(id) {
 
 function generateLessonsList() {
   let result = ""
-  for (const idx in LESSONS) {
-    const link = `[${LESSONS[idx].title}](${BOT_ADDRESS}?start=/lesson-${idx})`;
-    result += `${+idx + 1}. ${link}:` + "\n"
-    result += `${LESSONS[idx].description}` + "\n\n"
+  for (const l of LESSONS) {
+    // const link = `[${LESSONS[idx].title}](${BOT_ADDRESS}?start=/lesson-${idx})`;
+    // result += `${+idx + 1}. ${link}:` + "\n"
+    result += `${+l.id + 1}. ${l.title}:` + "\n"
+    result += `${l.description}` + "\n"
+    result += "برای شروع اینجا کلیک کنید:" + `/load-lesson-${l.id}` + "\n\n"
   }
   return result
 }
@@ -238,6 +240,12 @@ bot.help(helpPage);
 bot.command('select_lesson', selectLessonsPage)
 bot.command('stats', statsPage)
 
+bot.hears(/\/load-lesson-(\d+)/, async (ctx) => {
+  await on_any_interaction(ctx)
+  ctx.deleteMessage()
+  const lesson = getLesson(+(ctx.match[1]))
+  await lessonIntroPage(ctx, lesson)
+});
 
 bot.action(/^load-lesson-(\d+)$/, async (ctx) => {
   await on_any_interaction(ctx)
