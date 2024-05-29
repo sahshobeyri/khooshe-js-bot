@@ -86,9 +86,15 @@ const on_any_interaction = async (ctx) => {
   db_update_last_seen(ctx.from.id)
 }
 
+const lessonSelectionKeyboardOld =
+  Markup.inlineKeyboard(LESSONS.map(l=>
+    Markup.button.callback(`${l.title}`, `load-lesson-${l.id}`))
+  );
+
 const lessonSelectionKeyboard =
   Markup.inlineKeyboard(LESSONS.map(l=>
     Markup.button.callback(`${l.title}`, `load-lesson-${l.id}`))
+    .map(i => [i])
   );
 
 const lessonSlideKeyboard = (l,slideIdx) => {
