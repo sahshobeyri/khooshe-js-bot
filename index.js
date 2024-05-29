@@ -227,7 +227,9 @@ const helpPage = async (ctx) => {
 
 const startPage = async (ctx) => {
   await on_any_interaction(ctx)
-  ctx.reply(WELCOME_MSG)
+  const link = `[go to help](${BOT_ADDRESS}?start=/help)`;
+  // ctx.reply(WELCOME_MSG)
+  ctx.reply(link)
 }
 
 const bot = new Telegraf(BOT_TOKEN)
