@@ -266,7 +266,7 @@ bot.command('stats', statsPage)
 
 bot.hears(/\/LessonCode(\d+)/, async (ctx) => {
   await on_any_interaction(ctx)
-  ctx.deleteMessage()
+  // ctx.deleteMessage()
   const lesson = getLesson(+(ctx.match[1]))
   await lessonIntroPage(ctx, lesson)
 });
