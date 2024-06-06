@@ -173,7 +173,7 @@ const lessonIntroPage = async (ctx, lesson) => {
 
 const lessonSlidePage = async (ctx, lesson, slideIdx, initial = false) => {
   await on_any_interaction(ctx)
-  const photoPath = `img/lessons/l${lesson.id}/s${slideIdx}.PNG`;
+  const photoPath = `img/lessons/l${lesson.id}/s${slideIdx+1}.PNG`;
   if (initial) {
     try {
       const photoStream = fs.createReadStream(photoPath);
